@@ -4,6 +4,27 @@ Newest first. Each entry links to the run folder and its detailed `result-summar
 
 <!-- ENTRIES -->
 
+## v6 - 2026-10-07
+
+- Prompt: `prompts/code-review.v6.md`
+- Run folder: [runs/2026-10-07-v6-00/](runs/2026-10-07-v6-00/)
+- Reviewer model: subagent_explore (unknown concrete model) | Judge model: subagent_general (unknown concrete model)
+- Fixtures: 01-sql-injection, 02-off-by-one, 03-race-condition, 04-missing-error-handling, 05-clean-refactor, 06-typos
+- Overall: **92.5/100** (+9.4 vs v5)
+- Hard fails: none
+
+### What changed
+Implemented v5's suggested improvements: added a worked clean-refactor example, two `@@` hunk-header line-counting examples, an explicit concurrency rule for read-only accessors, and a must-not-flag typo list covering literal data, British spellings, and local abbreviations.
+
+### Suggested next changes
+1. Add a worked race-condition severity example: non-atomic `Inc` and unsynchronized `Count`/`Snapshot` are `high`, not `medium`.
+2. Add concrete must-not-flag typo examples (`usernam`, `TEXT = "teh ..."`, `Colour` in a proper name).
+3. Clarify that behavior-changing typos which silently fail logic are `high`, not `critical`.
+4. Make exact `file:line` citations a hard actionability requirement.
+
+---
+
+
 ## v5 - 2026-10-07
 
 - Prompt: `prompts/code-review.v5.md`
