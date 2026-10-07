@@ -4,6 +4,27 @@ Newest first. Each entry links to the run folder and its detailed `result-summar
 
 <!-- ENTRIES -->
 
+## v3 - 2026-10-07
+
+- Prompt: `prompts/code-review.v3.md`
+- Run folder: [runs/2026-10-07-v3-00/](runs/2026-10-07-v3-00/)
+- Reviewer model: subagent_explore default model | Judge model: subagent_explore default model
+- Fixtures: 01-sql-injection, 02-off-by-one, 03-race-condition, 04-missing-error-handling, 05-clean-refactor, 06-typos
+- Overall: **93.3/100** (-0.6 vs v2)
+- Hard fails: none
+- [Detailed results](runs/2026-10-07-v3-00/result-summary.md)
+
+### What changed
+Concurrency checklist now explicitly covers every method touching shared state, not just mutators; rules add line-number derivation from `@@` hunk headers and explicitly exclude intentional misspellings in comments/fixtures; severity definitions were reworded to sharpen the high/medium boundary.
+
+### Suggested next changes
+- Add a worked severity-boundary example distinguishing "high = wrong for every typical input" from "medium = wrong only on edge/remainder cases" (e.g., `totalPages` floor, `fd_leak`).
+- Include a concrete `@@` hunk-header counting example so cited line numbers stop drifting.
+- Clarify that leftover documentation-only vulnerable snippets are acceptable extras/low, not high-severity defects.
+- Encourage one finding per distinct defect instead of bundled typo groups to raise actionability.
+
+---
+
 ## v2 - 2026-10-07
 
 - Prompt: `prompts/code-review.v2.md`
