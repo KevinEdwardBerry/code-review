@@ -3,13 +3,20 @@ prompt_version: v1
 prompt_file: prompts/code-review.v1.md
 fixture: 03-race-condition
 date: 2026-10-07
+reviewer_profile: subagent_explore
 reviewer_model: subagent_explore default model
+judge_profile: subagent_explore
 judge_model: subagent_explore default model (same as reviewer; could not set a different one)
 weighted_score: 95.0
 hard_fail: false
 ---
 
 # 03-race-condition / v1
+
+
+## Models
+- Reviewer: subagent_explore (subagent_explore default model)
+- Judge: subagent_explore (subagent_explore default model (same as reviewer; could not set a different one))
 
 ## AI response
 ### Summary

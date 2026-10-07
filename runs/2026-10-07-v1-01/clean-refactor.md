@@ -3,13 +3,20 @@ prompt_version: v1
 prompt_file: prompts/code-review.v1.md
 fixture: 05-clean-refactor
 date: 2026-10-07
+reviewer_profile: subagent_explore
 reviewer_model: subagent_explore default model
+judge_profile: subagent_explore
 judge_model: subagent_explore default model
 weighted_score: 100.0
 hard_fail: false
 ---
 
 # 05-clean-refactor / v1
+
+
+## Models
+- Reviewer: subagent_explore (subagent_explore default model)
+- Judge: subagent_explore (subagent_explore default model)
 
 ## AI response
 

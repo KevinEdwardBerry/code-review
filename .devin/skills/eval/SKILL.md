@@ -1,6 +1,6 @@
 ---
 name: eval
-description: Evaluate a code-review prompt version against all fixtures, write runs/ and update CHANGELOG.md
+description: Evaluate a code-review prompt version against all fixtures, write a run folder under runs/, and update CHANGELOG.md
 argument-hint: "<version, e.g. v1>"
 triggers:
   - user
@@ -25,28 +25,41 @@ Evaluate a version of the code-review prompt. The user's argument is the version
 ## 1. Resolve inputs
 - Prompt file: `prompts/code-review.<vN>.md`. If missing, list `prompts/` and stop with a clear error.
 - Fixtures: every `fixtures/*.diff`, each paired with `fixtures/<same-name>.expected.md`. If an expected file is missing, stop and report it.
-- Read `rubric/rubric.md`, `rubric/judge-prompt.md`, `templates/run.md`, `templates/changelog-entry.md`, and `CHANGELOG.md`.
-- Today's date (YYYY-MM-DD) from the system info. Never overwrite existing files in `runs/`: if `runs/<date>-<vN>-<fixture>.md` exists, use the suffix `-r2`, `-r3`, ... for every run file in this evaluation and label the CHANGELOG entry "(re-run)".
+- Read `rubric/rubric.md`, `rubric/judge-prompt.md`, `templates/run.md`, `templates/run-details.md`, `templates/changelog-entry.md`, and `CHANGELOG.md`.
+- Today's date (YYYY-MM-DD) from the system info.
+- Determine the run folder: `runs/<date>-<vN>-<increment>/` where `<increment>` is the next unused two-digit number starting from `00`. Do not overwrite an existing run folder; always pick a new increment for re-runs.
 
 ## 2. Reviewer step (isolated)
-For each fixture, launch a subagent (profile `subagent_explore`, no file access needed) in parallel. Its task is exactly the prompt file contents with `{{DIFF}}` replaced by the fixture diff. Do NOT give it the expected file, the rubric, or any hint about seeded issues. Tell it to answer using only the text in the task, reading no files. Save its response verbatim.
+For each fixture, launch a subagent (profile `subagent_explore`, no file access needed) in parallel. Its task is exactly the prompt file contents with `{{DIFF}}` replaced by the fixture diff. Do NOT give it the expected file, the rubric, or any hint about seeded issues. Tell it to answer using only the text in the task, reading no files. Save its response verbatim. Record the subagent profile and, if available, the concrete model name used.
 
 ## 3. Judge step
-For each fixture, launch a separate subagent (in parallel, ideally with a different `model` than the reviewer) whose task is `rubric/judge-prompt.md` with `{{RUBRIC}}`, `{{DIFF}}`, `{{EXPECTED}}` and `{{REVIEW}}` filled in. It must return only JSON. Parse it; if it is invalid or fails the schema, retry once with the error, then record the fixture as "judge failed" and continue.
+For each fixture, launch a separate subagent (in parallel, ideally with a different `model` than the reviewer) whose task is `rubric/judge-prompt.md` with `{{RUBRIC}}`, `{{DIFF}}`, `{{EXPECTED}}` and `{{REVIEW}}` filled in. It must return only JSON. Parse it; if it is invalid or fails the schema, retry once with the error, then record the fixture as "judge failed" and continue. Record the subagent profile and, if available, the concrete model name used.
 
 ## 4. Scoring
 Per fixture: weighted score = sum(score/3 * weight) using the weights in `rubric/rubric.md`, rounded to one decimal. Hard fail if any `hard_fail` flag is true. Overall = mean of fixture scores. Find the most recent previous entry in `CHANGELOG.md` and compute per-fixture and overall deltas (if the fixture was not in that entry, show "new").
 
-## 5. Write runs
-For each fixture write `runs/<date>-<vN>-<fixture>.md` from `templates/run.md`: verbatim AI response, score table with rationale, matched/missed/false positives, typo recall, judge JSON, and an empty "Human override" section. Record the reviewer and judge model names (as best you know them).
+## 5. Write per-fixture run files
+For each fixture write `<run_folder>/<fixture>.md` from `templates/run.md`: verbatim AI response, score table with rationale, matched/missed/false positives, typo recall, judge JSON, and an empty "Human override" section. Record the reviewer and judge model names/profile names (as best you know them).
 
-## 6. Update CHANGELOG
-Fill `templates/changelog-entry.md` and insert it directly below the `<!-- ENTRIES -->` marker (newest first). Include:
+## 6. Write detailed run summary
+Fill `templates/run-details.md` and write it as `<run_folder>/result-summary.md`. Include:
+- prompt version, date, and models used,
 - what changed versus the previous evaluated prompt (run a diff between the two prompt files; for the first version write "Baseline"),
 - the fixture list (so score comparability is clear),
-- the score table, hard fails, and delta,
+- the score table, hard fails, and deltas,
 - observations: patterns in misses and false positives, per-typo-category recall, and 2-4 concrete suggested prompt changes,
-- for each fixture, a link to its run file and the full AI response inside a `<details>` block.
+- per-fixture links to the run files and the full AI response inside a `<details>` block.
 
-## 7. Report
+## 7. Update CHANGELOG
+Fill `templates/changelog-entry.md` and insert it directly below the `<!-- ENTRIES -->` marker (newest first). Keep it minimal:
+- prompt version and run folder link,
+- reviewer/judge models,
+- fixtures evaluated,
+- overall score and delta,
+- hard fails,
+- one-line "what changed" summary,
+- 2-4 concrete suggested next changes,
+- a link to `<run_folder>/result-summary.md` for full details.
+
+## 8. Report
 Print a short summary: overall score and delta, per-fixture totals, hard fails, regressions, and the suggested next changes. Do not commit and do not modify `prompts/`, `fixtures/`, or `rubric/`.

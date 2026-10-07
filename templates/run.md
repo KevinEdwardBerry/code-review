@@ -4,12 +4,18 @@ prompt_file: prompts/code-review.{{VERSION}}.md
 fixture: {{FIXTURE}}
 date: {{DATE}}
 reviewer_model: {{REVIEWER_MODEL}}
+reviewer_profile: {{REVIEWER_PROFILE}}
 judge_model: {{JUDGE_MODEL}}
+judge_profile: {{JUDGE_PROFILE}}
 weighted_score: {{SCORE}}
 hard_fail: {{HARD_FAIL}}
 ---
 
 # {{FIXTURE}} / {{VERSION}}
+
+## Models
+- Reviewer: {{REVIEWER_PROFILE}} ({{REVIEWER_MODEL}})
+- Judge: {{JUDGE_PROFILE}} ({{JUDGE_MODEL}})
 
 ## AI response
 {{REVIEW}}
