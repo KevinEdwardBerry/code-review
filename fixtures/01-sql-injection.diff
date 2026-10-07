@@ -1,20 +1,19 @@
-diff --git a/src/users.py b/src/users.py
+diff --git a/src/users.sql b/src/users.sql
 index 1a2b3c4..5d6e7f8 100644
---- a/src/users.py
-+++ b/src/users.py
+--- a/src/users.sql
++++ b/src/users.sql
 @@ -1,6 +1,18 @@
- import sqlite3
++-- User queries
  
  
- def get_db():
-     return sqlite3.connect("app.db")
++CREATE PROCEDURE FindUserByName
++    @name NVARCHAR(255)
++AS
++BEGIN
++    DECLARE @query NVARCHAR(MAX)
++    SET @query = 'SELECT id, name, email FROM users WHERE name = ''' + @name + ''''
++    EXEC sp_executesql @query
++END
 +
-+
-+def find_user_by_name(name):
-+    conn = get_db()
-+    cur = conn.cursor()
-+    query = "SELECT id, name, email FROM users WHERE name = '" + name + "'"
-+    cur.execute(query)
-+    row = cur.fetchone()
-+    conn.close()
-+    return row
++-- Alternative vulnerable approach
++SELECT id, name, email FROM users WHERE name = '" + name + "'"

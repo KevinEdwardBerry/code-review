@@ -1,16 +1,16 @@
 # Expected: 05-clean-refactor
 
-The change is a behavior-preserving refactor (assuming `tax_rate` is a `Decimal`, as before). There are no seeded issues.
+The change is a behavior-preserving refactor using LINQ's `Sum` method. There are no seeded issues.
 
 ## Must find
 - None.
 
 ## Acceptable extras
-- nit: add a note/type hint that `tax_rate` should be `Decimal` (an `int + float` mix would raise), or add tests.
+- nit: add a comment that `taxRate` should be a `decimal` to avoid type coercion issues, or add unit tests.
 
 ## Must not flag (false positives)
 - Any claim that the arithmetic changed behavior.
-- Style complaints about the generator expression or `sum` with a Decimal start value.
+- Style complaints about using `Sum` or LINQ.
 - Any critical/high/medium finding.
 
 Ideal verdict: approve or approve with nits.

@@ -1,13 +1,13 @@
 # Expected: 01-sql-injection
 
 ## Must find
-- `sqli` (critical): src/users.py `find_user_by_name` builds SQL by string concatenation with user input (new lines 12-13). Fix: parameterized query `cur.execute("... WHERE name = ?", (name,))`.
+- `sqli` (critical): src/users.sql `FindUserByName` builds SQL by string concatenation with user input (new lines 9-10). Fix: use parameterized query with `sp_executesql` properly: `EXEC sp_executesql N'SELECT id, name, email FROM users WHERE name = @name', N'@name NVARCHAR(255)', @name`.
 
 ## Acceptable extras (not false positives)
-- low/nit: connection not closed if `execute` raises (use `with`/try-finally).
+- low/nit: the alternative approach on line 14 also shows SQL injection via string concatenation.
 
 ## Must not flag
-- Use of sqlite3 itself, or the function name.
+- Use of T-SQL syntax, stored procedures, or the procedure name.
 
 ## Hard fail
 - Missing `sqli` sets `missed_critical`.

@@ -1,14 +1,15 @@
 # Expected: 03-race-condition
 
 ## Must find
-- `unlocked_read` (high): `Count` reads `s.counts` without taking `s.mu`; concurrent read/write of a Go map can panic ("concurrent map read and map write"). Fix: lock (or RWMutex) in `Count`.
-- `snapshot_leak` (high/medium): `Snapshot` returns the internal map, exposing it to unsynchronized access by callers. Fix: copy under lock.
+- `unlocked_read` (high): `Count` reads `counts` without synchronization; concurrent read/write of the dictionary can cause data corruption or exceptions. Fix: use `lock` statement or `ReaderWriterLockSlim` in `Count`.
+- `snapshot_leak` (high/medium): `Snapshot` returns the internal dictionary directly, exposing it to unsynchronized access by callers. Fix: copy the dictionary under lock.
+- `race_in_inc` (high): `Inc` checks `ContainsKey` and then accesses/modifies the dictionary without atomicity; between the check and the increment, another thread could modify the same key. Fix: use `lock` statement around the entire operation.
 
 ## Acceptable extras
-- nit: use `defer s.mu.Unlock()`; consider `sync.RWMutex`.
+- nit: consider using `ConcurrentDictionary<string, int>` instead of `Dictionary<string, int>` with manual locking.
 
 ## Must not flag
-- `Inc` locking logic (it is correct).
+- The use of Dictionary or the method names.
 
 ## Hard fail
-- Missing both `unlocked_read` and `snapshot_leak` sets `missed_critical`.
+- Missing `unlocked_read` and `snapshot_leak` sets `missed_critical`.

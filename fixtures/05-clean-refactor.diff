@@ -1,16 +1,26 @@
-diff --git a/src/totals.py b/src/totals.py
+diff --git a/src/totals.cs b/src/totals.cs
 index 5e6f708..91a2b3c 100644
---- a/src/totals.py
-+++ b/src/totals.py
+--- a/src/totals.cs
++++ b/src/totals.cs
 @@ -1,14 +1,12 @@
- from decimal import Decimal
++using System;
++using System.Collections.Generic;
++using System.Linq;
  
- 
- def order_total(items, tax_rate):
--    total = Decimal("0")
--    for item in items:
--        total = total + item.price * item.quantity
--    tax = total * tax_rate
--    return total + tax
-+    subtotal = sum((item.price * item.quantity for item in items), Decimal("0"))
-+    return subtotal * (1 + tax_rate)
+-public class OrderCalculator
++public class OrderCalculator
+ {
+-    public decimal OrderTotal(List<Item> items, decimal taxRate)
++    public decimal OrderTotal(List<Item> items, decimal taxRate)
+     {
+-        decimal total = 0;
+-        foreach (var item in items)
+-        {
+-            total = total + item.Price * item.Quantity;
+-        }
+-        decimal tax = total * taxRate;
+-        return total + tax;
++        decimal subtotal = items.Sum(item => item.Price * item.Quantity);
++        return subtotal * (1 + taxRate);
+     }
+ }
