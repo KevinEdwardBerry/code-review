@@ -1,0 +1,20 @@
+diff --git a/src/users.py b/src/users.py
+index 1a2b3c4..5d6e7f8 100644
+--- a/src/users.py
++++ b/src/users.py
+@@ -1,6 +1,18 @@
+ import sqlite3
+ 
+ 
+ def get_db():
+     return sqlite3.connect("app.db")
++
++
++def find_user_by_name(name):
++    conn = get_db()
++    cur = conn.cursor()
++    query = "SELECT id, name, email FROM users WHERE name = '" + name + "'"
++    cur.execute(query)
++    row = cur.fetchone()
++    conn.close()
++    return row

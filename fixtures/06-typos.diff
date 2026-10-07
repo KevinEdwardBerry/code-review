@@ -1,0 +1,50 @@
+diff --git a/src/accounts.ts b/src/accounts.ts
+index 6f70819..a2b3c4d 100644
+--- a/src/accounts.ts
++++ b/src/accounts.ts
+@@ -1,3 +1,48 @@
+ // Account service
+ 
++export interface Account {
++  username: string;
++  email: string;
++  adress: string;
++}
++
++const DEFAULTS = {
++  maxRetries: 3,
++  timeoutMs: 5000,
++};
++
++/**
++ * Creates a new account and sends a welcome email.
++ * We recieve the raw form input and normalize it.
++ */
++export function createAccount(input: Account, opts: Partial<typeof DEFAULTS> = {}) {
++  const retries = opts.maxRetires ?? DEFAULTS.maxRetries;
++  const usernam = input.username.trim().toLowerCase();
++
++  if (usernam.lenght < 3) {
++    throw new Error("Username must be at least 3 charcters long");
++  }
++
++  const account: Account = {
++    username: usernam,
++    email: input.email,
++    adress: input.adress,
++  };
++
++  console.log(`Created account for ${account.username}, retrying up to ${retries} times`);
++  return account;
++}
++
++// Returns the shipping address for the account.
++export function getAdress(account: Account): string {
++  return account.adress;
++}
++
++// Tests that the parser tolerates teh common typo in input.
++export const TYPO_SAMPLE = "teh quick brown fox";
++
++// Brand name used in emails: Acme Colour Labs
++export const BRAND = "Acme Colour Labs";

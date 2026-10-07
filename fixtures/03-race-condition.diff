@@ -1,0 +1,34 @@
+diff --git a/src/counter.go b/src/counter.go
+index 3c4d5e6..7f8091a 100644
+--- a/src/counter.go
++++ b/src/counter.go
+@@ -1,3 +1,28 @@
+ package stats
+ 
++import "sync"
++
++type RequestStats struct {
++	mu     sync.Mutex
++	counts map[string]int
++}
++
++func NewRequestStats() *RequestStats {
++	return &RequestStats{counts: make(map[string]int)}
++}
++
++// Inc records one request for the given path.
++func (s *RequestStats) Inc(path string) {
++	s.mu.Lock()
++	s.counts[path]++
++	s.mu.Unlock()
++}
++
++// Count returns the number of requests recorded for the given path.
++func (s *RequestStats) Count(path string) int {
++	return s.counts[path]
++}
++
++// Snapshot returns the current counts.
++func (s *RequestStats) Snapshot() map[string]int {
++	return s.counts
++}

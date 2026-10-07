@@ -1,0 +1,16 @@
+diff --git a/src/totals.py b/src/totals.py
+index 5e6f708..91a2b3c 100644
+--- a/src/totals.py
++++ b/src/totals.py
+@@ -1,14 +1,12 @@
+ from decimal import Decimal
+ 
+ 
+ def order_total(items, tax_rate):
+-    total = Decimal("0")
+-    for item in items:
+-        total = total + item.price * item.quantity
+-    tax = total * tax_rate
+-    return total + tax
++    subtotal = sum((item.price * item.quantity for item in items), Decimal("0"))
++    return subtotal * (1 + tax_rate)
