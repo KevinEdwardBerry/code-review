@@ -15,5 +15,4 @@ index 1a2b3c4..5d6e7f8 100644
 +    EXEC sp_executesql @query
 +END
 +
-+-- Alternative vulnerable approach
 +SELECT id, name, email FROM users WHERE name = '" + name + "'"

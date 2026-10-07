@@ -20,8 +20,8 @@ Typos are of three kinds: `misspelling`, `swap` (transposed letters), `missing_l
 - missing_letter: t3, t4, t6 (3)
 
 ## Must not flag (false positives)
-- `teh` in `TYPO_SAMPLE`: deliberate test data (the comment says so).
-- `Colour` in `BRAND`: brand name / valid British spelling.
+- `teh` in `TEXT`: literal data, not a spelling issue in prose or an API name.
+- `Colour` in `LABEL`: valid British spelling in a proper name.
 - `usernam` flagged as a runtime bug (it is consistently used).
 
 ## Ranking expectation
