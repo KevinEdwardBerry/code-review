@@ -4,6 +4,27 @@ Newest first. Each entry links to the run folder and its detailed `result-summar
 
 <!-- ENTRIES -->
 
+## v4 - 2026-10-07
+
+- Prompt: `prompts/code-review.v4.md`
+- Run folder: [runs/2026-10-07-v4-00/](runs/2026-10-07-v4-00/)
+- Reviewer model: subagent_explore (default subagent model) | Judge model: subagent_general (parent model)
+- Fixtures: 01-sql-injection, 02-off-by-one, 03-race-condition, 04-missing-error-handling, 05-clean-refactor, 06-typos
+- Overall: **73.6/100** (-19.7 vs v3)
+- Hard fails: 05-clean-refactor (fabricated)
+- [Detailed results](runs/2026-10-07-v4-00/result-summary.md)
+
+### What changed
+Broadened review scope to correctness, security, concurrency, performance, tests and maintainability; rewrote severity/rules with stronger anti-invention/anti-speculation guidance and formalized output; added line-number derivation from hunk headers.
+
+### Suggested next changes
+1. Add a clean-refactor example: mathematically-equivalent rewrites should be `approve`/`approve with nits`, not request changes.
+2. Add a concrete high-vs-medium severity example using pagination and SQL injection edge cases.
+3. Clarify that literal data, test fixtures, and domain spellings are must-not-flag and that local variable abbreviations are nits.
+4. Add a worked `@@` hunk-header counting example and require exact `file:line` citations.
+
+---
+
 ## v3 - 2026-10-07
 
 - Prompt: `prompts/code-review.v3.md`
