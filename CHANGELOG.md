@@ -4,6 +4,27 @@ Newest first. Each entry links to the run folder and its detailed `result-summar
 
 <!-- ENTRIES -->
 
+## v5 - 2026-10-07
+
+- Prompt: `prompts/code-review.v5.md`
+- Run folder: [runs/2026-10-07-v5-00/](runs/2026-10-07-v5-00/)
+- Reviewer model: subagent_explore (default subagent model) | Judge model: subagent_general (parent model)
+- Fixtures: 01-sql-injection, 02-off-by-one, 03-race-condition, 04-missing-error-handling, 05-clean-refactor, 06-typos
+- Overall: **83.1/100** (+9.5 vs v4)
+- Hard fails: 03-race-condition (missed_critical), 05-clean-refactor (fabricated)
+- [Detailed results](runs/2026-10-07-v5-00/result-summary.md)
+
+### What changed
+Tightened severity ranking by concrete impact, added worked hunk-header line-number example and exact-citation rule, formalized clean-refactor and typo must-not-flag rules, and added concrete severity-boundary examples.
+
+### Suggested next changes
+1. Add an explicit, worked clean-refactor example and forbid style/usings or unnecessary-import findings on behavior-preserving rewrites.
+2. Strengthen the concurrency checklist to explicitly require reviewing all read-only accessors and getters that touch shared mutable state.
+3. Add a second `@@` hunk-header counting example and make exact `file:line` citations a stated requirement for every finding.
+4. Clarify that literal string constants, test fixtures, British spellings in proper names, and consistently-used local abbreviations are not actionable typos.
+
+---
+
 ## v4 - 2026-10-07
 
 - Prompt: `prompts/code-review.v4.md`
