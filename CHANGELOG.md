@@ -3,6 +3,27 @@
 Newest first. Each entry links to the run folder and its detailed `result-summary.md`. Entries are added by `/eval <version>`.
 
 <!-- ENTRIES -->
+## v4 - 2026-10-08
+
+- Prompt: `prompts/code-review.v4.md`
+- Run folder: [runs/2026-10-08-v4-00/](runs/2026-10-08-v4-00/)
+- Reviewer model: not exposed (profile: subagent_explore) | Judge model: not exposed (profile: subagent_general; 03, 04, 06 judge failed after retry)
+- Fixtures: 01-sql-injection, 02-off-by-one, 03-race-condition (judge failed), 04-missing-error-handling (judge failed), 05-clean-refactor, 06-typos (judge failed)
+- Overall: **96.7/100** (+6.4 vs v3; three judged fixtures, not directly comparable to v3's five-fixture score)
+- Hard fails: none confirmed among scored fixtures; 03, 04, and 06 unscored
+
+### What changed
+Added explicit new-file line reconstruction, anti-speculative optimization guidance, stricter concurrent-path citations, and concise grouping guidance for cosmetic typos.
+
+### Suggested next changes
+- Require exact matching of each finding's quoted defect and cited new-file line; omit any uncertain anchor.
+- Review concurrent reads, writes, and snapshots as separately anchored findings.
+- Avoid unrelated doc-comment concerns unless the diff demonstrates a concrete contract defect.
+
+- Full details: [result-summary.md](runs/2026-10-08-v4-00/result-summary.md)
+
+---
+
 ## v3 - 2026-10-08
 
 - Prompt: `prompts/code-review.v3.md`
