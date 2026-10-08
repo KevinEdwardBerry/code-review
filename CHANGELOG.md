@@ -3,6 +3,25 @@
 Newest first. Each entry links to the run folder and its detailed `result-summary.md`. Entries are added by `/eval <version>`.
 
 <!-- ENTRIES -->
+## v3 - 2026-10-08
+
+- Prompt: `prompts/code-review.v3.md`
+- Run folder: [runs/2026-10-08-v3-00/](runs/2026-10-08-v3-00/)
+- Reviewer model: not exposed (profile: subagent_explore) | Judge model: not exposed (profile: subagent_general; 06-typos judge failed after retry)
+- Fixtures: 01-sql-injection, 02-off-by-one, 03-race-condition, 04-missing-error-handling, 05-clean-refactor, 06-typos (judge failed)
+- Overall: **90.3/100** (+2.8 vs v2-01; five judged fixtures, not directly comparable to six-fixture prior score)
+- Hard fails: 02-off-by-one — fabricated; 06-typos — unscored (judge failed)
+
+### What changed
+Added exact new-file line/excerpt verification, stronger anti-speculation rules, explicit concurrent shared-state path review, tighter nit guidance, and typo-severity ordering.
+
+### Suggested next changes
+- Verify every line number against new-file numbering and anchor it to the quoted defect; omit unverified references.
+- Suppress hypothetical future-growth and micro-optimization nits without demonstrated impact.
+- Keep concurrency reads, writes, and snapshots separately cited; resolve judge failure before comparing the typo fixture.
+- Full details: [result-summary.md](runs/2026-10-08-v3-00/result-summary.md)
+
+---
 ## v2 - 2026-10-08 (rerun)
 
 - Prompt: `prompts/code-review.v2.md`
