@@ -2,8 +2,8 @@ diff --git a/src/totals.cs b/src/totals.cs
 index 5e6f708..91a2b3c 100644
 --- a/src/totals.cs
 +++ b/src/totals.cs
-@@ -1,14 +1,12 @@
-using System.Collections.Generic;
+@@ -1,17 +1,11 @@
+ using System.Collections.Generic;
 +using System.Linq;
  
 -public class OrderCalculator

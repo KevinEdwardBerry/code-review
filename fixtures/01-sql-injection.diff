@@ -2,7 +2,7 @@ diff --git a/src/users.sql b/src/users.sql
 index 1a2b3c4..5d6e7f8 100644
 --- a/src/users.sql
 +++ b/src/users.sql
-@@ -1,6 +1,18 @@
+@@ -1,2 +1,13 @@
 +-- User queries
  
  

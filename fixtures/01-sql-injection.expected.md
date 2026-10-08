@@ -1,7 +1,7 @@
 # Expected: 01-sql-injection
 
 ## Must find
-- `sqli` (critical): src/users.sql `FindUserByName` builds SQL by string concatenation with user input (new line 14). Fix: use parameterized query with `sp_executesql` properly: `EXEC sp_executesql N'SELECT id, name, email FROM users WHERE name = @name', N'@name NVARCHAR(255)', @name`.
+- `sqli` (critical): src/users.sql `FindUserByName` builds SQL by string concatenation with user input (new line 10). Fix: use parameterized query with `sp_executesql` properly: `EXEC sp_executesql N'SELECT id, name, email FROM users WHERE name = @name', N'@name NVARCHAR(255)', @name`.
 
 ## Must not flag
 - Use of T-SQL syntax, stored procedures, or the procedure name.
