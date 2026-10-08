@@ -1,0 +1,30 @@
+{
+  "fixture": "04-missing-error-handling",
+  "scores": {
+    "recall": 3,
+    "precision": 2,
+    "severity_calibration": 2,
+    "actionability": 2,
+    "reasoning": 3,
+    "format": 2,
+    "tone": 2
+  },
+  "rationale": {
+    "recall": "All three must-find issues are covered: file-descriptor leak in writeBackup, missing res.ok check in fetchRemoteConfig, and lack of validation in loadConfig.",
+    "precision": "One speculative finding: the path-traversal/SSRF security note is conditional and not grounded in the diff; the sync/async nit is acceptable.",
+    "severity_calibration": "Only one clear miscalibration: the fd leak is rated high when the expected severity is medium.",
+    "actionability": "Fixes are concrete and correct, but no file:line references are provided for any finding.",
+    "reasoning": "Explanations correctly describe impact (fd exhaustion, silent parse of error responses, distant failures from missing validation).",
+    "format": "Well-structured and ordered by severity, but does not use the requested Summary/Findings/Verdict headings.",
+    "tone": "Constructive and mostly focused, with minor noise from the speculative security note."
+  },
+  "matched": ["fd_leak", "fetch_no_status", "no_validation"],
+  "missed": [],
+  "false_positives": ["Speculative path-traversal/SSRF security note not supported by the diff"],
+  "typo_recall": null,
+  "hard_fail": {
+    "missed_critical": false,
+    "fabricated": false,
+    "missed_behavioral_typo": false
+  }
+}

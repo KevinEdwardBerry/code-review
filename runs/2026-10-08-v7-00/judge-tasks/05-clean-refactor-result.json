@@ -1,0 +1,30 @@
+{
+  "fixture": "05-clean-refactor",
+  "scores": {
+    "recall": 3,
+    "precision": 2,
+    "severity_calibration": 3,
+    "actionability": 2,
+    "reasoning": 2,
+    "format": 2,
+    "tone": 2
+  },
+  "rationale": {
+    "recall": "No seeded issues to find; the review does not raise any critical/high/medium defect.",
+    "precision": "Multiple info/nit-level observations (null exception, unused using, missing Item context, rounding edge case), but no clear hallucination or must-not-flag arithmetic-behavior claim.",
+    "severity_calibration": "All findings are low/info/style; no critical/high/medium findings.",
+    "actionability": "Suggestions are concrete (null-safety, trim using) but the findings list lacks file:line references.",
+    "reasoning": "Explanations are generally correct but some are shallow or speculative (Item type, rounding).",
+    "format": "Follows Summary/Findings/Verdict structure; severity ordering is loosely maintained.",
+    "tone": "Constructive but verbose, with several unnecessary edge-case notes."
+  },
+  "matched": [],
+  "missed": [],
+  "false_positives": [],
+  "typo_recall": null,
+  "hard_fail": {
+    "missed_critical": false,
+    "fabricated": false,
+    "missed_behavioral_typo": false
+  }
+}

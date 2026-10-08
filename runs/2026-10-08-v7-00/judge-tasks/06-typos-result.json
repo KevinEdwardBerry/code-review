@@ -1,0 +1,34 @@
+{
+  "fixture": "06-typos",
+  "scores": {
+    "recall": 3,
+    "precision": 1,
+    "severity_calibration": 3,
+    "actionability": 2,
+    "reasoning": 2,
+    "format": 2,
+    "tone": 2
+  },
+  "rationale": {
+    "recall": "Found all five expected typo items: t1_maxretires, t2_lenght, t3_adress_api, t4_charcters, and t5_recieve.",
+    "precision": "Flagged multiple must-not-flag items (teh in TEXT, usernam abbreviation, and questioned Colour) and included several unseeded non-typo observations.",
+    "severity_calibration": "Behavior-changing typos t1 and t2 were ranked Critical, above the public API and cosmetic typos.",
+    "actionability": "Provided concrete fixes and a corrected code block, but most findings lacked exact file:line references.",
+    "reasoning": "Explanations for t1 and t3 were correct; t2s runtime claim was partly wrong because undefined < 3 is silently false rather than a thrown TypeError.",
+    "format": "Used severity-ordered sections, but deviated from the Summary/Findings/Verdict structure with emojis and extra sections.",
+    "tone": "Constructive but noisy, with a long list of minor and unseeded concerns alongside the expected typos."
+  },
+  "matched": ["t1_maxretires", "t2_lenght", "t3_adress_api", "t4_charcters", "t5_recieve"],
+  "missed": [],
+  "false_positives": ["teh in TEXT literal", "usernam local abbreviation", "Colour in LABEL (valid British spelling)"],
+  "typo_recall": {
+    "misspelling": "1/1",
+    "swap": "2/2",
+    "missing_letter": "2/2"
+  },
+  "hard_fail": {
+    "missed_critical": false,
+    "fabricated": false,
+    "missed_behavioral_typo": false
+  }
+}
