@@ -14,13 +14,9 @@ index 3c4d5e6..7f8091a 100644
 +    public void Inc(string path)
 +    {
 +        if (counts.ContainsKey(path))
-+        {
 +            counts[path]++;
-+        }
 +        else
-+        {
 +            counts[path] = 1;
-+        }
 +    }
 +
 +    // Count returns the number of requests recorded for the given path.

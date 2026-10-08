@@ -6,13 +6,13 @@ index 1a2b3c4..5d6e7f8 100644
 +-- User queries
  
  
-+CREATE PROCEDURE FindUserByName
-+    @name NVARCHAR(255)
++CREATE OR ALTER PROCEDURE FindUserByName
++    @name nvarchar(255)
 +AS
 +BEGIN
-+    DECLARE @query NVARCHAR(MAX)
-+    SET @query = 'SELECT id, name, email FROM users WHERE name = ''' + @name + ''''
-+    EXEC sp_executesql @query
++    SET NOCOUNT ON;
++    DECLARE @query nvarchar(1023);
++    SET @query = 'SELECT id, name, email FROM users WHERE name = ''' + @name + '''';
++    EXEC sp_executesql @query;
 +END
-+
-+SELECT id, name, email FROM users WHERE name = '" + name + "'"
++GO

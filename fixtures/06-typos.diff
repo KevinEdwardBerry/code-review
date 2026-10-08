@@ -8,40 +8,40 @@ index 6f70819..a2b3c4d 100644
 +export interface Account {
 +  username: string;
 +  email: string;
-+  adress: string;
++  address: string;
 +}
 +
 +const DEFAULTS = {
 +  maxRetries: 3,
-+  timeoutMs: 5000,
-+};
++  timeoutMs: 5000
++}
 +
 +/**
 + * Creates a new account and sends a welcome email.
 + * We recieve the raw form input and normalize it.
 + */
 +export function createAccount(input: Account, opts: Partial<typeof DEFAULTS> = {}) {
-+  const retries = opts.maxRetires ?? DEFAULTS.maxRetries;
-+  const usernam = input.username.trim().toLowerCase();
++  const retires = opts.maxRetries ?? DEFAULTS.maxRetries
++  const username = input.username.trim().toLowerCase()
 +
-+  if (usernam.lenght < 3) {
-+    throw new Error("Username must be at least 3 charcters long");
++  if (username.length < 3) {
++    throw new Error("Username lenght must be at least 3 charaters.")
 +  }
 +
 +  const account: Account = {
-+    username: usernam,
++    username: username,
 +    email: input.email,
-+    adress: input.adress,
-+  };
++    address: input.address
++  }
 +
-+  console.log(`Created account for ${account.username}, retrying up to ${retries} times`);
-+  return account;
++  console.log(`Created account for ${account.username}, retrying up to ${retires} times`)
++  return account
 +}
 +
 +export function getAdress(account: Account): string {
-+  return account.adress;
++  return account.address
 +}
 +
-+export const TEXT = "teh quick brown fox";
++export const TEXT = "teh quick brown fox"
 +
-+export const LABEL = "Acme Colour Labs";
++export const LABEL = "Acme Colour Labs"

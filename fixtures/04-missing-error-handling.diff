@@ -11,17 +11,17 @@ index 4d5e6f7..80910ab 100644
 +}
 +
 +export function loadConfig(path: string): AppConfig {
-+  const raw = fs.readFileSync(path, "utf8");
-+  const cfg = JSON.parse(raw);
-+  return cfg;
++  const raw = fs.readFileSync(path, "utf8")
++  const cfg = JSON.parse(raw)
++  return cfg
 +}
 +
 +export function writeBackup(path: string, data: string): void {
-+  const fd = fs.openSync(path, "w");
-+  fs.writeSync(fd, data);
++  const fd = fs.openSync(path, "w")
++  fs.writeSync(fd, data)
 +}
 +
 +export async function fetchRemoteConfig(url: string): Promise<AppConfig> {
-+  const res = await fetch(url);
-+  return res.json();
++  const res = await fetch(url)
++  return res.json()
 +}
