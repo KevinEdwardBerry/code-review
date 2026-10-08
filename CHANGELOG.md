@@ -7,6 +7,27 @@ Newest first. Each entry links to the run folder and its detailed `result-summar
 ## v7 - 2026-10-08
 
 - Prompt: `prompts/code-review.v7.md`
+- Run folder: [runs/2026-10-08-v7-03/](runs/2026-10-08-v7-03/)
+- Reviewer model: subagent_explore (concrete model unknown) | Judge model: subagent_general (concrete model unknown)
+- Fixtures: 01-sql-injection, 02-off-by-one, 03-race-condition, 04-missing-error-handling, 05-clean-refactor, 06-typos
+- Overall: **64.2/100** (-3.9 vs v7-02)
+- Hard fails: none
+
+### What changed
+No prompt changes; rerun of the minimal v7 prompt, unchanged from v7-02.
+
+### Suggested next changes
+1. Enforce exact Summary/Findings/Verdict sections and prohibit substitute sections or unrelated recommendations.
+2. Require precise new-file `file:line` citations for every finding.
+3. Require concrete, change-attributable evidence; avoid speculative issues on clean behavior-preserving changes.
+4. Clarify severity ordering and typo exceptions, including the must-not-flag status of `Colour`.
+- [Detailed results](runs/2026-10-08-v7-03/result-summary.md)
+
+---
+
+## v7 - 2026-10-08
+
+- Prompt: `prompts/code-review.v7.md`
 - Run folder: [runs/2026-10-08-v7-02/](runs/2026-10-08-v7-02/)
 - Reviewer model: unknown / Subagent Default where reported | Judge model: unknown
 - Fixtures: 01-sql-injection, 02-off-by-one, 03-race-condition, 04-missing-error-handling, 05-clean-refactor, 06-typos
