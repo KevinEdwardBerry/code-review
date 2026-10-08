@@ -3,6 +3,26 @@
 Newest first. Each entry links to the run folder and its detailed `result-summary.md`. Entries are added by `/eval <version>`.
 
 <!-- ENTRIES -->
+## v2 - 2026-10-08 (rerun)
+
+- Prompt: `prompts/code-review.v2.md`
+- Run folder: [runs/2026-10-08-v2-01/](runs/2026-10-08-v2-01/)
+- Reviewer model: not exposed (profile: subagent_explore) | Judge model: not exposed (profile: subagent_general)
+- Fixtures: 01-sql-injection, 02-off-by-one, 03-race-condition, 04-missing-error-handling, 05-clean-refactor, 06-typos
+- Overall: **87.5/100** (+3.6 vs v2-00)
+- Hard fails: 03-race-condition — fabricated; 06-typos — fabricated
+
+### What changed
+No prompt changes since the previous v2 evaluation; this rerun scored the same v2 prompt.
+
+### Suggested next changes
+- Require every cited line and excerpt to match the supplied diff's new-file line numbering.
+- Suppress speculative boundary/config concerns and unseeded style nits without demonstrated defects.
+- Keep concurrency paths and typo findings precisely quoted, separately located, and ranked by impact.
+- Full details: [result-summary.md](runs/2026-10-08-v2-01/result-summary.md)
+
+---
+
 ## v2 - 2026-10-08
 
 - Prompt: `prompts/code-review.v2.md`
