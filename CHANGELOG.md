@@ -3,6 +3,26 @@
 Newest first. Each entry links to the run folder and its detailed `result-summary.md`. Entries are added by `/eval <version>`.
 
 <!-- ENTRIES -->
+## v2 - 2026-10-08
+
+- Prompt: `prompts/code-review.v2.md`
+- Run folder: [runs/2026-10-08-v2-00/](runs/2026-10-08-v2-00/)
+- Reviewer model: not exposed (profile: subagent_explore) | Judge model: not exposed (profile: subagent_general)
+- Fixtures: 01-sql-injection, 02-off-by-one, 03-race-condition, 04-missing-error-handling, 05-clean-refactor, 06-typos
+- Overall: **83.9/100** (+13.3 vs v1)
+- Hard fails: 03-race-condition — missed_critical; 06-typos — fabricated
+
+### What changed
+Added evidence-based findings, severity and typo guidance, anti-speculation rules, and a required Summary / Findings / Verdict structure.
+
+### Suggested next changes
+- Add a targeted resource-lifecycle and HTTP/config-validation checklist for I/O changes.
+- Require synchronized review of shared-state reads, writes, and snapshots; distinguish demonstrated races from assumed caller behavior.
+- Require exact line references and preserve typo impact ranking; omit unsupported unused-option concerns.
+- Full details: [result-summary.md](runs/2026-10-08-v2-00/result-summary.md)
+
+---
+
 ## v1 - 2026-10-08
 
 - Prompt: `prompts/code-review.v1.md`
