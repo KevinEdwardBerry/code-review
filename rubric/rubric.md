@@ -21,7 +21,7 @@ Set a flag to true when it applies; the fixture is marked FAIL regardless of sco
 ## Typos fixture (06) extras
 - Report recall per typo category: `misspelling`, `swap`, `missing_letter`.
 - Behavior-changing typos must be ranked above cosmetic ones (severity calibration).
-- Flagging any must-not-flag item counts as a false positive.
+- Flagging an item that is explicitly listed as `Must not flag` (e.g. a documented acceptable spelling, brand name, British/variant spelling in a proper name, or literal data explicitly marked as acceptable) is a false positive. Clear misspellings in string literals are in scope unless the project explicitly marks them as acceptable.
 - Noise: a long list of nit typos that buries a high-impact one lowers Precision and Tone.
 
 ## Human overrides
