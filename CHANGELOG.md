@@ -6,6 +6,26 @@ Newest first. Each entry links to the run folder and its detailed `result-summar
 
 ## v7 - 2026-10-08
 
+- Prompt: `prompts/code-review.v7.md`
+- Run folder: [runs/2026-10-08-v7-01/](runs/2026-10-08-v7-01/)
+- Reviewer model: subagent_explore (unknown concrete model) | Judge model: subagent_general (unknown concrete model)
+- Fixtures: 01-sql-injection, 02-off-by-one, 03-race-condition, 04-missing-error-handling, 05-clean-refactor, 06-typos
+- Overall: **75.3/100** (-5.0 vs v7-00)
+- Hard fails: none
+
+### What changed
+No prompt changes; re-run of the v7 minimal prompt.
+
+### Suggested next changes
+1. Restore the `## Severity` section with concrete definitions and examples to stop over-ranking acceptable extras.
+2. Restore the `## Citing exact file:line` requirement and a worked `@@` hunk-header example.
+3. Restore the concurrency, behavior-preserving-rewrite, and typo must-not-flag rules from v6.
+4. Restore the Summary/Findings/Verdict output format and forbid emojis and extra sections.
+
+---
+
+## v7 - 2026-10-08
+
 - Prompt: `prompts/code-review-v7.md`
 - Run folder: [runs/2026-10-08-v7-00/](runs/2026-10-08-v7-00/)
 - Reviewer model: subagent_explore (unknown concrete model) | Judge model: subagent_general (unknown concrete model)
