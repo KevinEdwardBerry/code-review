@@ -1,0 +1,220 @@
+[
+  {
+    "fixture": "01-sql-injection",
+    "scores": {
+      "recall": 3,
+      "precision": 0,
+      "severity_calibration": 1,
+      "actionability": 2,
+      "reasoning": 2,
+      "format": 2,
+      "tone": 2
+    },
+    "rationale": {
+      "recall": "The review identifies the seeded SQL injection vulnerability in FindUserByName and quotes the exact concatenated dynamic SQL from the diff.",
+      "precision": "The SQLi is correct, but the review adds multiple non-issues: the 1023-character @query limit is not a real defect for this query, missing schema qualification is a style nit dressed as a moderate functional issue, and the error-handling/semantics concerns are unsupported. It also duplicates the same SQLi defect as a separate 'Quote-Escaping Fragility' BLOCKER.",
+      "severity_calibration": "SQL injection is correctly called a blocker/critical, but the same defect is listed twice as a blocker, and non-issues (buffer size, schema, semantics) are rated as moderate.",
+      "actionability": "The SQLi fix is concrete and correct, but no exact file:line references are provided and some suggested fixes address non-issues.",
+      "reasoning": "SQLi explanation is correct with attack examples and impact, but the reasoning for the additional issues over-interprets the code.",
+      "format": "Review is structured by severity with a summary table, but the Summary/Verdict appears at the end rather than at the start and it lacks precise line references.",
+      "tone": "Professional and constructive, but verbose and includes several speculative nits that reduce focus."
+    },
+    "matched": ["sqli"],
+    "missed": [],
+    "false_positives": [
+      "Claims the @query nvarchar(1023) limit can produce a truncated/altered query (the query length is bounded by the 255-char @name)",
+      "Missing schema qualification raised as a moderate functional issue (no evidence of multi-schema or wrong-object resolution in the diff)",
+      "Error-handling/semantics concerns raised as an issue (the procedure name and query clearly specify exact-match behavior)"
+    ],
+    "typo_recall": null,
+    "hard_fail": {
+      "missed_critical": false,
+      "fabricated": false,
+      "missed_behavioral_typo": false
+    }
+  },
+  {
+    "fixture": "02-off-by-one",
+    "scores": {
+      "recall": 3,
+      "precision": 1,
+      "severity_calibration": 2,
+      "actionability": 2,
+      "reasoning": 3,
+      "format": 2,
+      "tone": 2
+    },
+    "rationale": {
+      "recall": "Found both seeded issues: the `getPage` off-by-one (`start = page * pageSize`) at the correct location and `totalPages` using `Math.floor` at the correct location.",
+      "precision": "The out-of-range `getPage(items, 999, 10)` returning `[]` is flagged as a concern, but the diff does not define this as an error and the reviewer notes it may be intended; it is not a real defect. The JSDoc nit is minor and not a must-not-flag style complaint.",
+      "severity_calibration": "Maps `Critical` to the expected `high` for `page_offset`. `total_pages_floor` is over-ranked by one level (expected `medium`, got `Critical`/high). The validation extra is expected `low/nit` and marked yellow/medium, which is within one level for a nit.",
+      "actionability": "Provides correct concrete fixes and a consolidated suggested-fix snippet, but does not give file:line references for each finding.",
+      "reasoning": "Explanations for the two seeded bugs are correct and describe the user-visible impact (silently skipped first page, dropped final partial page); validation reasoning has minor edge-case inaccuracies but is not central.",
+      "format": "Has Summary, Findings, and Verdict and findings are ordered by severity, but it adds Suggested Fix and Testing Recommendations sections and uses emojis, deviating from the expected structure.",
+      "tone": "Constructive and professional, but the unseeded out-of-range finding and extra sections make it somewhat noisy rather than filler-free."
+    },
+    "matched": [
+      "page_offset",
+      "total_pages_floor"
+    ],
+    "missed": [],
+    "false_positives": [
+      "Out-of-range `getPage` returning `[]` is flagged as an issue, but the behavior is noted as possibly intended and is not a real defect in the diff"
+    ],
+    "typo_recall": null,
+    "hard_fail": {
+      "missed_critical": false,
+      "fabricated": false,
+      "missed_behavioral_typo": false
+    }
+  },
+  {
+    "fixture": "03-race-condition",
+    "scores": {
+      "recall": 3,
+      "precision": 0,
+      "severity_calibration": 2,
+      "actionability": 2,
+      "reasoning": 3,
+      "format": 2,
+      "tone": 2
+    },
+    "rationale": {
+      "recall": "The review finds the snapshot leak (returns the internal dictionary), the Inc read-modify-write race, and the broader unsynchronized read/write problem that covers Count's unlocked reads, so all three expected issues are addressed.",
+      "precision": "The review includes several off-topic findings not in the expected set: file/class naming conventions, a double-lookup performance nit, null/empty path handling, a readonly suggestion, and XML doc comment style. These are more than trivial noise and none are listed as acceptable extras beyond the ConcurrentDictionary recommendation.",
+      "severity_calibration": "The real race findings are ranked High as expected (snapshot is High vs. expected High/Medium, within one level), but the false-positive naming convention is ranked Medium and the thread-safety High is qualified conditionally.",
+      "actionability": "Each finding has a concrete recommendation and often code, and the suggested revised version is useful, but no file:line references are provided.",
+      "reasoning": "Explanations for the race conditions and snapshot leak are correct and describe concrete impact: lost updates, dictionary corruption, and InvalidOperationException.",
+      "format": "The review uses Summary / Issues / Suggested revised version / Verdict and orders issues by severity, but the extra Suggested revised version section and conditional severity wording are deviations from the expected Summary/Findings/Verdict format.",
+      "tone": "Constructive and detailed, but verbose and includes a lot of off-topic nits and a long suggested rewrite."
+    },
+    "matched": [
+      "unlocked_read",
+      "snapshot_leak",
+      "race_in_inc"
+    ],
+    "missed": [],
+    "false_positives": [
+      "File/class naming conventions and missing namespace (Medium)",
+      "ContainsKey/indexer double-lookup performance micro-issue (Low)",
+      "Null/empty path handling (Low)",
+      "counts field could be readonly (Low)",
+      "Comments should be XML doc comments (Nit)"
+    ],
+    "typo_recall": null,
+    "hard_fail": {
+      "missed_critical": false,
+      "fabricated": false,
+      "missed_behavioral_typo": false
+    }
+  },
+  {
+    "fixture": "04-missing-error-handling",
+    "scores": {
+      "recall": 3,
+      "precision": 2,
+      "severity_calibration": 1,
+      "actionability": 2,
+      "reasoning": 3,
+      "format": 2,
+      "tone": 2
+    },
+    "rationale": {
+      "recall": "All three seeded issues are found: the file-descriptor leak in writeBackup, the missing res.ok check in fetchRemoteConfig, and the unvalidated/cast JSON output from loadConfig.",
+      "precision": "No clear false positives and the AppConfig interface is not flagged, but the review adds several unseeded extras (partial write, validation in fetchRemoteConfig, durability/fsync, semicolon style) that add noise.",
+      "severity_calibration": "fd_leak and no_validation are both over-severitied to High (expected medium and medium/low); only fetch_no_status severity matches.",
+      "actionability": "Each finding includes a concrete fix or suggestion and code snippets, but file:line references are not provided.",
+      "reasoning": "Explanations are technically correct and describe impact (descriptor exhaustion, unvalidated config propagation, HTTP error responses parsed as config).",
+      "format": "Summary / Findings / Recommendations structure is present and severity labels are used, but there is no explicit Verdict section and the findings are not strictly ordered by severity.",
+      "tone": "Constructive and professional, though the volume of extra findings makes the review somewhat noisy and less focused."
+    },
+    "matched": [
+      "fd_leak",
+      "fetch_no_status",
+      "no_validation"
+    ],
+    "missed": [],
+    "false_positives": [],
+    "typo_recall": null,
+    "hard_fail": {
+      "missed_critical": false,
+      "fabricated": false,
+      "missed_behavioral_typo": false
+    }
+  },
+  {
+    "fixture": "05-clean-refactor",
+    "scores": {
+      "recall": 3,
+      "precision": 1,
+      "severity_calibration": 2,
+      "actionability": 2,
+      "reasoning": 2,
+      "format": 2,
+      "tone": 2
+    },
+    "rationale": {
+      "recall": "No expected issues to find, so nothing is missed.",
+      "precision": "The null-safety regression risk is a clear false positive: the expected diff has no seeded issues and null exception differences are not listed as acceptable extras. The 1m nit and test reminder are acceptable, and the performance note is trivial noise.",
+      "severity_calibration": "Nits are labeled as nits, but the null-safety risk is framed as a regression warning for a non-seeded concern, so one severity is off.",
+      "actionability": "Suggestions are concrete but lack file:line references.",
+      "reasoning": "Explanations of decimal equivalence, exception types, and type coercion are technically correct, but the null-safety concern is over-emphasized and the analysis is somewhat shallow.",
+      "format": "Summary/Findings/Verdict structure is present, but findings are not ordered by severity and include non-findings/positives.",
+      "tone": "Constructive and polite, but overly verbose for a clean diff."
+    },
+    "matched": [],
+    "missed": [],
+    "false_positives": [
+      "Null-safety regression risk: claims a different exception type for null input is a breaking change."
+    ],
+    "typo_recall": null,
+    "hard_fail": {
+      "missed_critical": false,
+      "fabricated": false,
+      "missed_behavioral_typo": false
+    }
+  },
+  {
+    "fixture": "06-typos",
+    "scores": {
+      "recall": 3,
+      "precision": 1,
+      "severity_calibration": 1,
+      "actionability": 2,
+      "reasoning": 2,
+      "format": 2,
+      "tone": 2
+    },
+    "rationale": {
+      "recall": "Identifies all six expected typos: the exported function 'getAdress', the user-facing error typos 'lenght' and 'charaters', the local variable 'retires', the JSDoc 'recieve', and the exported string 'teh' in TEXT.",
+      "precision": "Includes the must-not-flag 'Colour' in LABEL as a conditional/possible spelling concern and raises numerous out-of-scope functional/style issues (unused timeoutMs, missing email logic, console.log PII, etc.) that add noise.",
+      "severity_calibration": "No explicit severity levels are assigned. The 'Typos' subsection places cosmetic 'recieve' and 'retires' before user-facing 'lenght'/'charaters' and the public 'teh' typo, and 'getAdress' is duplicated later instead of ranked cleanly.",
+      "actionability": "Suggested concrete renames and fixes, but no file:line references are provided for any finding.",
+      "reasoning": "Correctly explains the public-API cost of misspelling 'getAdress' and correctly notes that 'Colour' is valid British English, but explanations for the user-facing typos and several other issues are shallow.",
+      "format": "Uses a Summary / Issues / Recommendations structure with subsections, which deviates from the expected Summary / Findings / Verdict format and is not ordered by severity.",
+      "tone": "Constructive and professional, but the review is noisy: it mixes non-typo functional/style concerns, duplicates the 'getAdress' finding, and includes a conditional must-not-flag item."
+    },
+    "matched": [
+      "t1_adress_api",
+      "t2_lenght",
+      "t3_charaters",
+      "t4_retires",
+      "t5_recieve",
+      "t6_teh_text"
+    ],
+    "missed": [],
+    "false_positives": [
+      "Listed the must-not-flag 'Acme Colour Labs' / 'Colour' item as a conditional/possible spelling concern, even though it is a valid British spelling in a proper name."
+    ],
+    "typo_recall": {
+      "misspelling": "1/1",
+      "swap": "3/3",
+      "missing_letter": "2/2"
+    },
+    "hard_fail": {
+      "missed_critical": false,
+      "fabricated": false,
+      "missed_behavioral_typo": false
+    }
+  }
+]
