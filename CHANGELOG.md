@@ -3,6 +3,25 @@
 Newest first. Each entry links to the run folder and its detailed `result-summary.md`. Entries are added by `/eval <version>`.
 
 <!-- ENTRIES -->
+## v4 - 2026-10-09 (rerun)
+
+- Prompt: `prompts/code-review.v4.md`
+- Run folder: [runs/2026-10-09-v4-00/](runs/2026-10-09-v4-00/)
+- Reviewer model: not exposed (profile: subagent_explore) | Judge model: not exposed (profile: subagent_general)
+- Fixtures: 01-sql-injection, 02-off-by-one, 03-race-condition, 04-missing-error-handling, 05-clean-refactor, 06-typos
+- Overall: **86.4/100** (-10.3 vs previous v4; not directly comparable because previous run scored three fixtures)
+- Hard fails: 03-race-condition — missed_critical, fabricated; 06-typos — fabricated
+
+### What changed
+No prompt changes since the previous v4 evaluation; this rerun re-evaluates all six fixtures with successful judge outputs.
+
+### Suggested next changes
+- Enforce a final audit that each cited new-file line matches its quoted changed code.
+- Review all independent functions and shared-state reads, writes, and snapshots before finalizing.
+- Suppress speculative buffer/performance concerns without demonstrated impact; calibrate severity and typo ranking.
+- Full details: [result-summary.md](runs/2026-10-09-v4-00/result-summary.md)
+
+---
 ## v4 - 2026-10-08
 
 - Prompt: `prompts/code-review.v4.md`
