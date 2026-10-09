@@ -1,7 +1,7 @@
 ---
 name: eval
 description: Evaluate a code-review prompt version against all fixtures, write a run folder under runs/, and update CHANGELOG.md
-argument-hint: "<version, e.g. v1> [--repeats N]"
+argument-hint: "<version, e.g. v1>"
 triggers:
   - user
 allowed-tools:
@@ -21,7 +21,7 @@ permissions:
     - Write(rubric/**)
 ---
 
-Evaluate a version of the code-review prompt. The user's argument is the version (`v1` or `1`); normalize to `vN`. Optional `--repeats N` (default 3) runs the whole reviewer+judge pipeline N times to measure variance; each repeat gets its own run folder increment.
+Evaluate a version of the code-review prompt exactly once. The user's argument is the version (`v1` or `1`); normalize to `vN`. Run the reviewer and judge pipeline once for each fixture.
 
 ## 1. Resolve inputs
 - Prompt file: `prompts/code-review.<vN>.md`. If missing, list `prompts/` and stop with a clear error.
@@ -37,7 +37,7 @@ For each fixture, launch a subagent (profile `subagent_explore`, no file access 
 For each fixture, launch a separate subagent (in parallel, ideally with a different `model` than the reviewer) whose task is `rubric/judge-prompt.md` with `{{RUBRIC}}`, `{{DIFF}}` (raw), `{{EXPECTED}}`, `{{CITATION_CHECK}}` and `{{REVIEW}}` filled in. Always use a different `model` for the judge than the reviewer when one can be chosen, and record both concrete model names; if a name is not exposed, say so rather than guessing. It must return only JSON. Parse it; if it is invalid or fails the schema, retry once with the error, then record the fixture as "judge failed" and continue. Record the subagent profile and, if available, the concrete model name used.
 
 ## 4. Scoring
-Per fixture: weighted score = sum(score/3 * weight) using the weights in `rubric/rubric.md`, rounded to one decimal. Hard fail if any `hard_fail` flag is true. Overall = mean of fixture scores; with repeats, report mean, min and max across repeats per fixture and overall. Find the most recent previous entry in `CHANGELOG.md` and compute per-fixture and overall deltas (if the fixture was not in that entry, show "new"). Only show a delta when both runs used the same fixture set and every fixture was successfully judged; otherwise write "not comparable" and say why. Treat deltas smaller than the observed repeat spread as noise.
+Per fixture: weighted score = sum(score/3 * weight) using the weights in `rubric/rubric.md`, rounded to one decimal. Hard fail if any `hard_fail` flag is true. Overall = mean of fixture scores. Find the most recent previous evaluated entry in `CHANGELOG.md` and compute per-fixture and overall deltas (if the fixture was not in that entry, show "new"). Only show a delta when both runs used the same fixture set and every fixture was successfully judged; otherwise write "not comparable" and say why.
 
 ## 5. Write per-fixture run files
 For each fixture write `<run_folder>/<fixture>.md` from `templates/run.md`: verbatim AI response, score table with rationale, matched/missed/false positives, typo recall, judge JSON, and an empty "Human override" section. Record the reviewer and judge model names/profile names (as best you know them).
