@@ -1,27 +1,13 @@
-diff --git a/src/config.ts b/src/config.ts
-index 4d5e6f7..80910ab 100644
---- a/src/config.ts
-+++ b/src/config.ts
-@@ -1,2 +1,22 @@
- import * as fs from "fs"
- 
-+export interface AppConfig {
-+  port: number;
-+  dbUrl: string;
-+}
-+
-+export function loadConfig(path: string): AppConfig {
-+  const raw = fs.readFileSync(path, "utf8")
-+  const cfg = JSON.parse(raw)
-+  return cfg
-+}
-+
-+export function writeBackup(path: string, data: string): void {
-+  const fd = fs.openSync(path, "w")
-+  fs.writeSync(fd, data)
-+}
-+
-+export async function fetchRemoteConfig(url: string): Promise<AppConfig> {
-+  const res = await fetch(url)
-+  return res.json()
+diff --git a/src/webhook.ts b/src/webhook.ts
+new file mode 100644
+index 0000000..80910ab
+--- /dev/null
++++ b/src/webhook.ts
+@@ -0,0 +1,8 @@
++export async function deliverWebhook(url: string, payload: string): Promise<void> {
++  await fetch(url, {
++    method: "POST",
++    headers: { "content-type": "text/plain" },
++    body: payload,
++  })
 +}
