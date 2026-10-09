@@ -1,0 +1,47 @@
+diff --git a/src/accounts.ts b/src/accounts.ts
+index 6f70819..a2b3c4d 100644
+--- a/src/accounts.ts
++++ b/src/accounts.ts
+@@ -1,2 +1,42 @@
+   1 |  // Account service
+   2 |  
+   3 | +export interface Account {
+   4 | +  username: string;
+   5 | +  email: string;
+   6 | +  address: string;
+   7 | +}
+   8 | +
+   9 | +const DEFAULTS = {
+  10 | +  maxRetries: 3,
+  11 | +  timeoutMs: 5000
+  12 | +}
+  13 | +
+  14 | +/**
+  15 | + * Creates a new account and sends a welcome email.
+  16 | + * We recieve the raw form input and normalize it.
+  17 | + */
+  18 | +export function createAccount(input: Account, opts: Partial<typeof DEFAULTS> = {}) {
+  19 | +  const retires = opts.maxRetries ?? DEFAULTS.maxRetries
+  20 | +  const username = input.username.trim().toLowerCase()
+  21 | +
+  22 | +  if (username.length < 3) {
+  23 | +    throw new Error("Username lenght must be at least 3 charaters.")
+  24 | +  }
+  25 | +
+  26 | +  const account: Account = {
+  27 | +    username: username,
+  28 | +    email: input.email,
+  29 | +    address: input.address
+  30 | +  }
+  31 | +
+  32 | +  console.log(`Created account for ${account.username}, retrying up to ${retires} times`)
+  33 | +  return account
+  34 | +}
+  35 | +
+  36 | +export function getAdress(account: Account): string {
+  37 | +  return account.address
+  38 | +}
+  39 | +
+  40 | +export const TEXT = "teh quick brown fox"
+  41 | +
+  42 | +export const LABEL = "Acme Colour Labs"

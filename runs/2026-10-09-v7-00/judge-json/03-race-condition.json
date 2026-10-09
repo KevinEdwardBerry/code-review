@@ -1,0 +1,34 @@
+{
+  "fixture": "03-race-condition",
+  "scores": {
+    "recall": 3,
+    "precision": 3,
+    "severity_calibration": 3,
+    "actionability": 3,
+    "reasoning": 3,
+    "format": 3,
+    "tone": 3
+  },
+  "rationale": {
+    "recall": "The review found all three must-find items, each anchored to its own line: race_in_inc at line 13, unlocked_read at line 20, and snapshot_leak at line 25.",
+    "precision": "There are no false positives. The review doesn't flag the use of Dictionary or the method names. It cites RequestHandler only as evidence for the race.",
+    "severity_calibration": "The severities match the expected ones: High for Inc, Medium for Count, and Medium for Snapshot.",
+    "actionability": "Each finding has a concrete fix (lock or ConcurrentDictionary.AddOrUpdate, a copy made under the lock) and a correct file:line. CITATION_CHECK reports ok.",
+    "reasoning": "The explanations are correct and cover impact: lost increments, possible corruption, unsafe reads during writes, and callers mutating or enumerating the live dictionary.",
+    "format": "The review follows Summary / Findings / Verdict, with findings ordered by severity.",
+    "tone": "The review is concise and constructive, with no filler."
+  },
+  "matched": [
+    "race_in_inc",
+    "unlocked_read",
+    "snapshot_leak"
+  ],
+  "missed": [],
+  "false_positives": [],
+  "typo_recall": null,
+  "hard_fail": {
+    "missed_critical": false,
+    "fabricated": false,
+    "missed_behavioral_typo": false
+  }
+}

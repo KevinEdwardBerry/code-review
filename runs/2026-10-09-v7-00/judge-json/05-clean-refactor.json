@@ -1,0 +1,30 @@
+{
+  "fixture": "05-clean-refactor",
+  "scores": {
+    "recall": 3,
+    "precision": 3,
+    "severity_calibration": 3,
+    "actionability": 3,
+    "reasoning": 3,
+    "format": 3,
+    "tone": 3
+  },
+  "rationale": {
+    "recall": "There are no seeded issues. The review correctly reports None, which is the ideal outcome.",
+    "precision": "The review has no false positives. It makes no claim that the arithmetic changed and no style complaint about LINQ. It also ignores the diff churn.",
+    "severity_calibration": "No findings were raised, which matches the expected result. There are no severities to miscalibrate.",
+    "actionability": "No findings were expected, so nothing needed a fix or a line reference. The review did not invent any.",
+    "reasoning": "The review correctly calls the change a behavior-equivalent, low-risk refactor.",
+    "format": "The review follows Summary / Findings / Verdict exactly, and Findings says None.",
+    "tone": "The review is concise and has no filler."
+  },
+  "matched": [],
+  "missed": [],
+  "false_positives": [],
+  "typo_recall": null,
+  "hard_fail": {
+    "missed_critical": false,
+    "fabricated": false,
+    "missed_behavioral_typo": false
+  }
+}

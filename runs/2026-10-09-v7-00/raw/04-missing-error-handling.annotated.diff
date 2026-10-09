@@ -1,0 +1,13 @@
+diff --git a/src/webhook.ts b/src/webhook.ts
+new file mode 100644
+index 0000000..80910ab
+--- /dev/null
++++ b/src/webhook.ts
+@@ -0,0 +1,8 @@
+   1 | +export async function deliverWebhook(url: string, payload: string): Promise<void> {
+   2 | +  await fetch(url, {
+   3 | +    method: "POST",
+   4 | +    headers: { "content-type": "text/plain" },
+   5 | +    body: payload,
+   6 | +  })
+   7 | +}

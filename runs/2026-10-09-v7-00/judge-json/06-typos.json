@@ -1,0 +1,41 @@
+{
+  "fixture": "06-typos",
+  "scores": {
+    "recall": 3,
+    "precision": 3,
+    "severity_calibration": 3,
+    "actionability": 3,
+    "reasoning": 3,
+    "format": 3,
+    "tone": 3
+  },
+  "rationale": {
+    "recall": "All six seeded typos (t1-t6) are found. The lenght and charaters typos are grouped into one finding, and the recieve and retires typos are grouped into another. Both groupings are explicitly allowed.",
+    "precision": "No false positives. 'Colour' in LABEL is not flagged. Every finding is a real typo in the diff.",
+    "severity_calibration": "The public API typo is Medium and the others are Low. No finding is High or Critical. The ranking matches the expectation: t1, then t2/t3, then t6, then t4/t5.",
+    "actionability": "Each finding has a correct file:line, a quoted snippet and a concrete fix. The CITATION_CHECK reports ok. The one possible quibble is that the 'also used at line 32' reference is a minor extra detail.",
+    "reasoning": "The review explains that the misspelled public name becomes a breaking change to fix later. It also notes that the error text is shown to users.",
+    "format": "Follows Summary / Findings / Verdict, ordered by severity.",
+    "tone": "Concise and constructive, with no filler."
+  },
+  "matched": [
+    "t1_adress_api",
+    "t2_lenght",
+    "t3_charaters",
+    "t6_teh_text",
+    "t4_retires",
+    "t5_recieve"
+  ],
+  "missed": [],
+  "false_positives": [],
+  "typo_recall": {
+    "misspelling": "1/1",
+    "swap": "3/3",
+    "missing_letter": "2/2"
+  },
+  "hard_fail": {
+    "missed_critical": false,
+    "fabricated": false,
+    "missed_behavioral_typo": false
+  }
+}

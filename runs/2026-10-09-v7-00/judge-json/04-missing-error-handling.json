@@ -1,0 +1,32 @@
+{
+  "fixture": "04-missing-error-handling",
+  "scores": {
+    "recall": 3,
+    "precision": 3,
+    "severity_calibration": 3,
+    "actionability": 3,
+    "reasoning": 3,
+    "format": 3,
+    "tone": 3
+  },
+  "rationale": {
+    "recall": "The review found the only must-find issue, the unchecked HTTP status. It names the same defect at the same location.",
+    "precision": "There are no false positives. The review did not flag network-failure handling, which is on the must-not-flag list.",
+    "severity_calibration": "The review rates it Medium, which matches the expected medium severity.",
+    "actionability": "The fix is concrete: check response.ok or the status and throw. The citation src/webhook.ts:2 is valid, and CITATION_CHECK reports ok.",
+    "reasoning": "The explanation is correct. fetch resolves on 4xx/5xx, so the function reports success when the endpoint rejected the webhook, and failures look like successes. The review also states the impact. It does not say the thrown error should include the status, which is a minor gap.",
+    "format": "The review follows Summary / Findings / Verdict. It has a single finding, so ordering is not an issue.",
+    "tone": "The review is concise, constructive and free of filler."
+  },
+  "matched": [
+    "unchecked_http_status"
+  ],
+  "missed": [],
+  "false_positives": [],
+  "typo_recall": null,
+  "hard_fail": {
+    "missed_critical": false,
+    "fabricated": false,
+    "missed_behavioral_typo": false
+  }
+}

@@ -3,6 +3,27 @@
 Newest first. Each entry links to the run folder and its detailed `result-summary.md`. Entries are added by `/eval <version>`.
 
 <!-- ENTRIES -->
+## v7 - 2026-10-09
+
+- Prompt: `prompts/code-review.v7.md`
+- Run folder: [runs/2026-10-09-v7-00/](runs/2026-10-09-v7-00/)
+- Reviewer model: not exposed (profile: subagent_explore) | Judge model: not exposed (profile: subagent_general)
+- Fixtures: 01-csharp-sql-injection, 02-off-by-one, 03-race-condition, 04-missing-error-handling, 05-clean-refactor, 06-typos
+- Overall: **99.2/100** (+5.0 vs v6-02 (94.2); same fixtures, all judged; single run)
+- Hard fails: none
+
+### What changed
+v7 adds first-line citation rule for multi-line statements, generic-ish severity calibration examples, and a no-non-typo-findings rule for typo changes; fixes the 04 fabricated-citation fail and 06/03 regressions, leaving 02 totalPages over-rated (High).
+
+### Suggested next changes
+1. Make calibration examples generic (not fixture-shaped) and require per-finding severity (02 `totalPages` still High).
+2. Add fresh fixtures (XSS, resource leak, auth bypass, tempting-nit clean change) to check the v7 rules generalize.
+3. Require the cited line to contain the defective operation (keeps the 04 fix robust).
+4. Rerun v7 to measure variance before treating +5.0 as real.
+
+Full details: [runs/2026-10-09-v7-00/result-summary.md](runs/2026-10-09-v7-00/result-summary.md)
+
+---
 ## v6 - 2026-10-09 (rerun)
 
 - Prompt: `prompts/code-review.v6.md`
