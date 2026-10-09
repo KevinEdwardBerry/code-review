@@ -4,6 +4,28 @@ Newest first. Each entry links to the run folder and its detailed `result-summar
 
 <!-- ENTRIES -->
 
+## v8 - 2026-10-09
+
+- Prompt: `prompts/code-review.v8.md`
+- Run folder: [runs/2026-10-09-v8-00/](runs/2026-10-09-v8-00/)
+- Reviewer model: not exposed (profile: subagent_explore) | Judge model: not exposed (profile: subagent_general)
+- Fixtures: 01-csharp-sql-injection, 02-off-by-one, 03-race-condition, 04-missing-error-handling, 05-clean-refactor, 06-typos
+- Overall: **99.2/100** (+2.8 vs v7-01 (96.4))
+- Hard fails: none
+
+### What changed
+v8 refines the concurrency rule to treat a check-then-act sequence as one High finding and the evidence rule to quote each relevant line inside a single finding without splitting one defect across findings.
+
+### Suggested next changes
+1. Set explicit typo severity: user-facing text and public string literals are Low; exported API names may be Low/Medium.
+2. Require typo findings to stay strictly lower in severity than any functional defect in the same change.
+3. Add fresh fixtures (XSS, resource leak, auth bypass) to test v8 rule generalization.
+4. Preserve the v8 concurrency and evidence wording; it fixed the v7 split-finding and over-severity regressions.
+
+Full details: [runs/2026-10-09-v8-00/result-summary.md](runs/2026-10-09-v8-00/result-summary.md)
+
+---
+
 ## v7 - 2026-10-09 (rerun)
 
 - Prompt: `prompts/code-review.v7.md`

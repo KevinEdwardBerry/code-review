@@ -1,0 +1,28 @@
+diff --git a/src/CustomerRepository.cs b/src/CustomerRepository.cs
+new file mode 100644
+--- /dev/null
++++ b/src/CustomerRepository.cs
+@@ -0,0 +1,23 @@
+   1 | +using Microsoft.Data.SqlClient;
+   2 | +
+   3 | +public sealed record Customer(int Id, string Email);
+   4 | +
+   5 | +public sealed class CustomerRepository(string connectionString)
+   6 | +{
+   7 | +    public async Task<Customer?> FindByEmailAsync(
+   8 | +        string email,
+   9 | +        CancellationToken cancellationToken = default)
+  10 | +    {
+  11 | +        await using var connection = new SqlConnection(connectionString);
+  12 | +        await connection.OpenAsync(cancellationToken);
+  13 | +
+  14 | +        var sql = $"SELECT Id, Email FROM Customers WHERE Email = '{email}'";
+  15 | +        await using var command = new SqlCommand(sql, connection);
+  16 | +        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+  17 | +
+  18 | +        if (!await reader.ReadAsync(cancellationToken))
+  19 | +            return null;
+  20 | +
+  21 | +        return new Customer(reader.GetInt32(0), reader.GetString(1));
+  22 | +    }
+  23 | +}
