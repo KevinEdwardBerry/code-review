@@ -1,0 +1,11 @@
+{
+  "citations_checked": 1,
+  "problems": [
+    {
+      "cite": "src/webhook.ts:6",
+      "reason": "no quoted excerpt in this finding matches the cited line",
+      "actual_line": "})"
+    }
+  ],
+  "ok": false
+}

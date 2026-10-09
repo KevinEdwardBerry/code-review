@@ -6,6 +6,27 @@ Newest first. Each entry links to the run folder and its detailed `result-summar
 ## v6 - 2026-10-09 (rerun)
 
 - Prompt: `prompts/code-review.v6.md`
+- Run folder: [runs/2026-10-09-v6-02/](runs/2026-10-09-v6-02/)
+- Reviewer model: not exposed (profile: subagent_explore) | Judge model: not exposed (profile: subagent_general)
+- Fixtures: 01-csharp-sql-injection, 02-off-by-one, 03-race-condition, 04-missing-error-handling, 05-clean-refactor, 06-typos
+- Overall: **94.2/100** (-1.1 vs v6-01 (95.3); -1.0 vs mean of prior v6 runs (95.2); indicative, same fixtures, full judge template used for all)
+- Hard fails: 04-missing-error-handling — fabricated (citation `src/webhook.ts:6` quote does not match line `})`)
+
+### What changed
+Unchanged v6 prompt rerun; 06-typos dropped to 80.0 (extra non-typo finding, typo grouping) while 03 improved to 95.0.
+
+### Suggested next changes
+1. Cite the first line of the offending expression and quote exactly that line (never a closing `})`).
+2. Add severity examples: page-count and read-race defects are Medium, not High.
+3. On typo changes, forbid non-typo findings and list public-string typos separately above grouped nits.
+
+Full details: [runs/2026-10-09-v6-02/result-summary.md](runs/2026-10-09-v6-02/result-summary.md)
+
+---
+
+## v6 - 2026-10-09 (rerun)
+
+- Prompt: `prompts/code-review.v6.md`
 - Run folder: [runs/2026-10-09-v6-01/](runs/2026-10-09-v6-01/)
 - Reviewer model: not exposed (profile: subagent_explore) | Judge model: not exposed (profile: subagent_general)
 - Fixtures: 01-csharp-sql-injection, 02-off-by-one, 03-race-condition, 04-missing-error-handling, 05-clean-refactor, 06-typos
