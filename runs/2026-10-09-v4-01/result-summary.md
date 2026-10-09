@@ -35,7 +35,7 @@ Hard-fail flags: 02-off-by-one (`fabricated`, due incorrect cited lines); 03-rac
 
 - The reviewer found every seeded issue in the SQL injection, pagination, and typo fixtures, but missed `Count`'s unsynchronized read in the race fixture and `loadConfig` validation/error-context issues in the config fixture.
 - Citation accuracy remains the clearest weakness: incorrect line numbers lowered actionability on pagination and typos and triggered fabricated hard fails on pagination, the clean refactor's verification notes, and typos. The refactor response also added verification commentary beyond the requested three-heading structure.
-- Independent citation spot-check found a judge blind spot on 01-csharp-sql-injection: the review cites line 14, but the interpolated SQL is at new-file line 15. The schema-valid judge JSON was retained without a human override, so the official score and hard-fail flag above remain the judge's output.
+- Correction (2026-10-09, via `scripts/difftool.py check`): an earlier note here claimed the 01-csharp-sql-injection citation was off by one. It was wrong; the interpolated SQL is at new-file line 14 and the judge's score stands. The script does confirm the wrong line citations on 02-off-by-one, 03-race-condition (`:26`), 05-clean-refactor (`:10`) and 06-typos.
 - Relative to the previous run, pagination regressed by 5.0 points and the clean-refactor fixture by 1.7; the former also newly hard-failed for fabricated line references. The race and config fixture scores improved, though race remains a hard fail.
 
 Suggested prompt changes:

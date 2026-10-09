@@ -3,6 +3,13 @@
 Newest first. Each entry links to the run folder and its detailed `result-summary.md`. Entries are added by `/eval <version>`.
 
 <!-- ENTRIES -->
+## Harness update - 2026-10-09 (no evaluation)
+
+- Added `scripts/difftool.mjs` (line annotation + mechanical citation check), `prompts/code-review.v5.md` (unevaluated; uses annotated diffs, consolidated rules), citation check in the judge prompt, and `--repeats`/not-comparable handling in `/eval`.
+- Correction to v4-01: the 01-csharp-sql-injection citation (`:14`) was correct; the scripted check confirms the wrong citations on 02, 03, 05 and 06 only.
+- Scores before this entry are single-sample and not comparable to future repeated runs.
+
+---
 ## v4 - 2026-10-09 (rerun)
 
 - Prompt: `prompts/code-review.v4.md`

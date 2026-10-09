@@ -3,7 +3,7 @@ You are a strict, impartial evaluator of AI code reviews. Score the REVIEW again
 Rules:
 - Judge only against the EXPECTED file and the DIFF. Do not reward findings that are not real.
 - Mark a finding as a match if it identifies the same defect at the same location, even if worded differently.
-- Verify every cited line/code in the review exists in the DIFF; otherwise set `fabricated` true.
+- A mechanical CITATION_CHECK (script output) is provided. Set `fabricated` true if it reports any problem, or if the review cites code/APIs not in the DIFF. Do not set `fabricated` for line numbers when CITATION_CHECK reports ok. Lower actionability for each reported citation problem.
 - Output ONLY valid JSON, no prose, no code fences, matching the schema below.
 
 Schema:
@@ -39,6 +39,9 @@ Schema:
 
 # EXPECTED
 {{EXPECTED}}
+
+# CITATION_CHECK
+{{CITATION_CHECK}}
 
 # REVIEW
 {{REVIEW}}
