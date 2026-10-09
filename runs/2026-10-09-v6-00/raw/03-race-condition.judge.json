@@ -1,0 +1,34 @@
+{
+  "fixture": "03-race-condition",
+  "scores": {
+    "recall": 3,
+    "precision": 3,
+    "severity_calibration": 3,
+    "actionability": 3,
+    "reasoning": 3,
+    "format": 3,
+    "tone": 3
+  },
+  "rationale": {
+    "recall": "All three expected issues are identified: the concurrent unsynchronized mutation of the shared Dictionary, the unsynchronized Count read, and the Snapshot returning the live internal dictionary.",
+    "precision": "No false positives or unrelated findings; each identified issue corresponds to an expected defect.",
+    "severity_calibration": "The high race condition and two medium issues are correctly ranked, matching the expected severity assignments.",
+    "actionability": "Concrete fixes are provided for each finding with correct file:line citations, including ConcurrentDictionary/AddOrUpdate, locking, and returning a copy.",
+    "reasoning": "Explanations are correct and describe concrete impacts: lost increments, dictionary corruption, undefined concurrent reads, and InvalidOperationException during enumeration.",
+    "format": "Follows the requested Summary / Findings / Verdict structure and orders findings by severity.",
+    "tone": "Constructive, concise, and focused on actionable feedback."
+  },
+  "matched": [
+    "race_in_inc",
+    "unlocked_read",
+    "snapshot_leak"
+  ],
+  "missed": [],
+  "false_positives": [],
+  "typo_recall": null,
+  "hard_fail": {
+    "missed_critical": false,
+    "fabricated": false,
+    "missed_behavioral_typo": false
+  }
+}

@@ -1,0 +1,27 @@
+diff --git a/src/config.ts b/src/config.ts
+index 4d5e6f7..80910ab 100644
+--- a/src/config.ts
++++ b/src/config.ts
+@@ -1,2 +1,22 @@
+   1 |  import * as fs from "fs"
+   2 |  
+   3 | +export interface AppConfig {
+   4 | +  port: number;
+   5 | +  dbUrl: string;
+   6 | +}
+   7 | +
+   8 | +export function loadConfig(path: string): AppConfig {
+   9 | +  const raw = fs.readFileSync(path, "utf8")
+  10 | +  const cfg = JSON.parse(raw)
+  11 | +  return cfg
+  12 | +}
+  13 | +
+  14 | +export function writeBackup(path: string, data: string): void {
+  15 | +  const fd = fs.openSync(path, "w")
+  16 | +  fs.writeSync(fd, data)
+  17 | +}
+  18 | +
+  19 | +export async function fetchRemoteConfig(url: string): Promise<AppConfig> {
+  20 | +  const res = await fetch(url)
+  21 | +  return res.json()
+  22 | +}

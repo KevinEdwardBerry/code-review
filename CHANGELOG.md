@@ -3,6 +3,25 @@
 Newest first. Each entry links to the run folder and its detailed `result-summary.md`. Entries are added by `/eval <version>`.
 
 <!-- ENTRIES -->
+## v6 - 2026-10-09
+
+- Prompt: `prompts/code-review.v6.md`
+- Run folder: [runs/2026-10-09-v6-00/](runs/2026-10-09-v6-00/)
+- Reviewer model: not exposed (profile: subagent_explore) | Judge model: not exposed (profile: subagent_general)
+- Fixtures: 01-csharp-sql-injection, 02-off-by-one, 03-race-condition, 04-missing-error-handling, 05-clean-refactor, 06-typos
+- Overall: **95.0/100** (+19.7 vs v1-00)
+- Hard fails: None
+
+### What changed
+v6 adds explicit annotated-diff evidence rules, lowest-severity calibration, required Summary/Findings/Verdict format, and typo-ranking guidance to the bare v1 baseline.
+
+### Suggested next changes
+1. Add a remote-fetch/JSON-validation checklist for I/O fixtures.
+2. Provide concrete severity examples to prevent over-ranking secondary issues and cosmetic typos.
+3. Keep the mechanical citation and no-speculation rules; they produced zero fabricated findings.
+
+---
+
 ## v1 - 2026-10-09 (rerun)
 
 - Prompt: `prompts/code-review.v1.md`
