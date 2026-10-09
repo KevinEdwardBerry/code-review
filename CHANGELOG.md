@@ -3,6 +3,28 @@
 Newest first. Each entry links to the run folder and its detailed `result-summary.md`. Entries are added by `/eval <version>`.
 
 <!-- ENTRIES -->
+## v1 - 2026-10-09 (rerun)
+
+- Prompt: `prompts/code-review.v1.md`
+- Run folder: [runs/2026-10-09-v1-00/](runs/2026-10-09-v1-00/)
+- Reviewer model: not exposed (profile: subagent_explore) | Judge model: not exposed (profile: subagent_general)
+- Fixtures: 01-csharp-sql-injection, 02-off-by-one, 03-race-condition, 04-missing-error-handling, 05-clean-refactor, 06-typos
+- Overall: **75.3/100** (-18.6 vs v4-01; +4.7 vs prior v1 run, fixture 01 differs)
+- Hard fails: None
+
+### What changed
+Rerun of the unchanged v1 baseline prompt (bare reviewer instruction, no format or rules); scored against the current six fixtures with the mechanical citation check.
+
+### Suggested next changes
+1. Add the required Summary / Findings / Verdict format with severity ordering.
+2. Add a no-speculation / no-self-contradiction rule to cut false positives.
+3. Require separate findings for each unsynchronized access path (Count read missed on 03).
+4. Add typo ranking and a do-not-flag rule for proper names and variant spellings.
+
+Full details: [runs/2026-10-09-v1-00/result-summary.md](runs/2026-10-09-v1-00/result-summary.md)
+
+---
+
 ## Harness update - 2026-10-09 (no evaluation)
 
 - Added `scripts/difftool.mjs` (line annotation + mechanical citation check), `prompts/code-review.v5.md` (unevaluated; uses annotated diffs, consolidated rules), citation check in the judge prompt, and `--repeats`/not-comparable handling in `/eval`.
