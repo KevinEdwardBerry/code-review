@@ -3,6 +3,27 @@
 Newest first. Each entry links to the run folder and its detailed `result-summary.md`. Entries are added by `/eval <version>`.
 
 <!-- ENTRIES -->
+## v6 - 2026-10-09 (rerun)
+
+- Prompt: `prompts/code-review.v6.md`
+- Run folder: [runs/2026-10-09-v6-01/](runs/2026-10-09-v6-01/)
+- Reviewer model: not exposed (profile: subagent_explore) | Judge model: not exposed (profile: subagent_general)
+- Fixtures: 01-csharp-sql-injection, 02-off-by-one, 03-race-condition, 04-missing-error-handling, 05-clean-refactor, 06-typos
+- Overall: **95.3/100** (+0.3 vs prior v6 mean; indicative because judge prompts 02–06 used a condensed rubric)
+- Hard fails: 04-missing-error-handling — fabricated citation (quote does not match cited line)
+
+### What changed
+v6 tightens evidence verification and adds explicit security/correctness/reliability/concurrency checks versus v5; numeric rerun deltas are indicative because fixtures 02–06 received condensed judge instructions.
+
+### Suggested next changes
+1. Require citation to the defective operation and exact matching quote.
+2. Add severity examples for pagination/counting issues and rank public-string typos above local/comment nits.
+3. Do not suggest `Interlocked` alone for concurrent `Dictionary` access.
+
+Full details: [runs/2026-10-09-v6-01/result-summary.md](runs/2026-10-09-v6-01/result-summary.md)
+
+---
+
 ## v6 - 2026-10-09
 
 - Prompt: `prompts/code-review.v6.md`

@@ -1,0 +1,30 @@
+{
+  "fixture": "01-csharp-sql-injection",
+  "scores": {
+    "recall": 3,
+    "precision": 3,
+    "severity_calibration": 3,
+    "actionability": 3,
+    "reasoning": 3,
+    "format": 3,
+    "tone": 3
+  },
+  "rationale": {
+    "recall": "Found the critical SQL injection vulnerability in the interpolated email query.",
+    "precision": "Reports only the expected issue and does not flag acceptable implementation details.",
+    "severity_calibration": "Correctly rates the issue Critical, matching the expected severity.",
+    "actionability": "Provides the correct file and line, identifies the unsafe interpolation, and gives a concrete parameterized-query fix.",
+    "reasoning": "Explains how attacker-controlled input can alter the predicate or execute additional statements and describes the resulting impact.",
+    "format": "Follows the requested Summary / Findings / Verdict structure with the finding in the expected section.",
+    "tone": "Constructive, focused, and concise."
+  },
+  "matched": ["sqli_email"],
+  "missed": [],
+  "false_positives": [],
+  "typo_recall": null,
+  "hard_fail": {
+    "missed_critical": false,
+    "fabricated": false,
+    "missed_behavioral_typo": false
+  }
+}
