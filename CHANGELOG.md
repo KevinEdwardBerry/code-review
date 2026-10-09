@@ -6,6 +6,26 @@ Newest first. Each entry links to the run folder and its detailed `result-summar
 ## v4 - 2026-10-09 (rerun)
 
 - Prompt: `prompts/code-review.v4.md`
+- Run folder: [runs/2026-10-09-v4-01/](runs/2026-10-09-v4-01/)
+- Reviewer model: not exposed (profile: subagent_explore) | Judge model: not exposed (profile: subagent_general)
+- Fixtures: 01-csharp-sql-injection, 02-off-by-one, 03-race-condition, 04-missing-error-handling, 05-clean-refactor, 06-typos
+- Overall: **93.9/100** (+7.5 vs previous v4 run)
+- Hard fails: 02-off-by-one — fabricated; 03-race-condition — missed_critical; 05-clean-refactor — fabricated; 06-typos — fabricated
+
+### What changed
+The v3-to-v4 prompt diff adds detailed line reconstruction and exact evidence checks, stronger anti-speculation/concurrency guidance, and more explicit severity, reference-format, and typo-grouping instructions.
+
+### Suggested next changes
+- Require exact mechanical verification of each cited line and quoted excerpt; omit mismatched anchors.
+- Review every independent function and shared-state read, write, and snapshot path before responding.
+- Keep clean-diff responses within the requested headings and `None.` format; avoid unneeded verification commentary.
+
+- Full details: [result-summary.md](runs/2026-10-09-v4-01/result-summary.md)
+
+---
+## v4 - 2026-10-09 (rerun)
+
+- Prompt: `prompts/code-review.v4.md`
 - Run folder: [runs/2026-10-09-v4-00/](runs/2026-10-09-v4-00/)
 - Reviewer model: not exposed (profile: subagent_explore) | Judge model: not exposed (profile: subagent_general)
 - Fixtures: 01-sql-injection, 02-off-by-one, 03-race-condition, 04-missing-error-handling, 05-clean-refactor, 06-typos
