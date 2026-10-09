@@ -1,0 +1,24 @@
+diff --git a/src/pagination.js b/src/pagination.js
+index 2b3c4d5..6e7f809 100644
+--- a/src/pagination.js
++++ b/src/pagination.js
+@@ -1,2 +1,19 @@
+   1 |  // Pagination helpers
+   2 |  
+   3 | +/**
+   4 | + * Returns the items for a 1-based page number.
+   5 | + */
+   6 | +function getPage(items, page, pageSize) {
+   7 | +  const start = page * pageSize;
+   8 | +  const end = start + pageSize;
+   9 | +  return items.slice(start, end);
+  10 | +}
+  11 | +
+  12 | +/**
+  13 | + * Returns the total number of pages.
+  14 | + */
+  15 | +function totalPages(items, pageSize) {
+  16 | +  return Math.floor(items.length / pageSize);
+  17 | +}
+  18 | +
+  19 | +module.exports = { getPage, totalPages };

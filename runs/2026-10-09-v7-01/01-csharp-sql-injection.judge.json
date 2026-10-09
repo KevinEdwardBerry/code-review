@@ -1,0 +1,26 @@
+{
+  "fixture": "01-csharp-sql-injection",
+  "scores": {
+    "recall": 3,
+    "precision": 3,
+    "severity_calibration": 3,
+    "actionability": 3,
+    "reasoning": 3,
+    "format": 3,
+    "tone": 3
+  },
+  "rationale": {
+    "recall": "The review identifies the one must-find issue, `sqli_email`, at the correct line `src/CustomerRepository.cs:14`.",
+    "precision": "No false positives or irrelevant flags; the review stays focused on the single SQL injection defect.",
+    "severity_calibration": "Correctly labels the finding as [Critical], matching the expected severity for `sqli_email`.",
+    "actionability": "Provides a concrete, correct fix: parameterized query with @email, and cites the exact vulnerable line.",
+    "reasoning": "Explanation is correct and describes the impact, including an example payload and the attack outcome.",
+    "format": "Follows the requested Summary / Findings / Verdict structure with a single, severity-ordered finding.",
+    "tone": "Constructive, concise, and free of filler."
+  },
+  "matched": ["sqli_email"],
+  "missed": [],
+  "false_positives": [],
+  "typo_recall": null,
+  "hard_fail": {"missed_critical": false, "fabricated": false, "missed_behavioral_typo": false}
+}

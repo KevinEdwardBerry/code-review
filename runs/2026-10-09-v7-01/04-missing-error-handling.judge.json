@@ -1,0 +1,26 @@
+{
+  "fixture": "04-missing-error-handling",
+  "scores": {
+    "recall": 3,
+    "precision": 3,
+    "severity_calibration": 3,
+    "actionability": 3,
+    "reasoning": 3,
+    "format": 3,
+    "tone": 3
+  },
+  "rationale": {
+    "recall": "The review correctly identifies the seeded `unchecked_http_status` issue in deliverWebhook.",
+    "precision": "No false positives or must-not-flag items are raised.",
+    "severity_calibration": "The finding is correctly rated Medium, matching the expected severity.",
+    "actionability": "The review gives a concrete fix (check res.ok/res.status and throw/return an error) and cites src/webhook.ts:2.",
+    "reasoning": "The explanation correctly states that fetch resolves on 4xx/5xx and that failures become invisible to callers.",
+    "format": "Follows the requested Summary / Findings / Verdict structure with findings ordered by severity.",
+    "tone": "Constructive, concise, and free of filler."
+  },
+  "matched": ["unchecked_http_status"],
+  "missed": [],
+  "false_positives": [],
+  "typo_recall": null,
+  "hard_fail": {"missed_critical": false, "fabricated": false, "missed_behavioral_typo": false}
+}

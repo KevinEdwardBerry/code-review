@@ -1,0 +1,44 @@
+diff --git a/src/counter.cs b/src/counter.cs
+index 3c4d5e6..7f8091a 100644
+--- a/src/counter.cs
++++ b/src/counter.cs
+@@ -0,0 +1,39 @@
+   1 | +using System;
+   2 | +using System.Collections.Generic;
+   3 | +using System.Linq;
+   4 | +using System.Threading.Tasks;
+   5 | +
+   6 | +public class RequestStats
+   7 | +{
+   8 | +    private Dictionary<string, int> counts = [];
+   9 | +
+  10 | +    public void Inc(string path)
+  11 | +    {
+  12 | +        if (counts.TryGetValue(path, out var count))
+  13 | +            counts[path] = count + 1;
+  14 | +        else
+  15 | +            counts[path] = 1;
+  16 | +    }
+  17 | +
+  18 | +    public int Count(string path)
+  19 | +    {
+  20 | +        return counts.TryGetValue(path, out var count) ? count : 0;
+  21 | +    }
+  22 | +
+  23 | +    public Dictionary<string, int> Snapshot()
+  24 | +    {
+  25 | +        return counts;
+  26 | +    }
+  27 | +}
+  28 | +
+  29 | +public class RequestHandler
+  30 | +{
+  31 | +    private readonly RequestStats stats = new RequestStats();
+  32 | +
+  33 | +    public async Task HandleAllAsync(IEnumerable<string> paths)
+  34 | +    {
+  35 | +        await Task.WhenAll(paths.Select(p => Task.Run(() => stats.Inc(p))));
+  36 | +    }
+  37 | +
+  38 | +    public int Total(string path) => stats.Count(path);
+  39 | +}

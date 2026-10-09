@@ -3,6 +3,29 @@
 Newest first. Each entry links to the run folder and its detailed `result-summary.md`. Entries are added by `/eval <version>`.
 
 <!-- ENTRIES -->
+
+## v7 - 2026-10-09 (rerun)
+
+- Prompt: `prompts/code-review.v7.md`
+- Run folder: [runs/2026-10-09-v7-01/](runs/2026-10-09-v7-01/)
+- Reviewer model: not exposed (profile: subagent_explore) | Judge model: not exposed (profile: subagent_general)
+- Fixtures: 01-csharp-sql-injection, 02-off-by-one, 03-race-condition, 04-missing-error-handling, 05-clean-refactor, 06-typos
+- Overall: **96.4/100** (-2.8 vs v7-00 (99.2))
+- Hard fails: 06-typos — fabricated
+
+### What changed
+No changes vs the previous evaluated prompt; this is a rerun of the identical `prompts/code-review.v7.md` file.
+
+### Suggested next changes
+1. Require every cited line to have a matching quoted excerpt.
+2. Group check-then-act race writes into a single High finding.
+3. Rate exported/public-API typos as Medium.
+4. Add fresh fixtures to test v7 rule generalization.
+
+
+Full details: [runs/2026-10-09-v7-01/result-summary.md](runs/2026-10-09-v7-01/result-summary.md)
+
+---
 ## v7 - 2026-10-09
 
 - Prompt: `prompts/code-review.v7.md`

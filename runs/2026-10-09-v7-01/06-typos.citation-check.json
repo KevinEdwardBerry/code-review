@@ -1,0 +1,11 @@
+{
+  "citations_checked": 6,
+  "problems": [
+    {
+      "cite": "src/accounts.ts:32",
+      "reason": "no quoted excerpt in this finding matches the cited line",
+      "actual_line": "console.log(`Created account for ${account.username}, retrying up to ${retires} times`)"
+    }
+  ],
+  "ok": false
+}
